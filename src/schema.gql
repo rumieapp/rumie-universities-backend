@@ -110,8 +110,46 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type CampaignDto {
+  id: ID!
+  userId: String!
+  title: String!
+  url: String
+  type: String!
+  tags: [String!]
+  campaignImage: String
+  campaignStartAt: DateTime!
+  campaignEndAt: DateTime!
+  campaignDuration: Int!
+  eventDay: DateTime!
+  eventTime: DateTime!
+  showOnApp: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type Query {
   getAllEvents: EventResponse!
   getEvent(id: String!): EventResponse
   getInstitutionBySlug(slug: String!): InstitutionDto
+  getAllCampaigns: [CampaignDto!]!
+}
+
+type Mutation {
+  createCampaign(createCampaignInput: CreateCampaignInput!): CampaignDto!
+}
+
+input CreateCampaignInput {
+  userId: String!
+  title: String!
+  url: String
+  type: String!
+  tags: [String!]
+  campaignImage: String
+  campaignStartAt: DateTime!
+  campaignEndAt: DateTime!
+  campaignDuration: Int!
+  eventDay: DateTime!
+  eventTime: DateTime!
+  showOnApp: Boolean!
 }

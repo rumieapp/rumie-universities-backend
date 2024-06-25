@@ -11,6 +11,7 @@ import { LocalistModule } from './localist/localist.module';
 import { InstitutionModule } from './institution/institution.module';
 import { PrismaService } from './prisma/prisma.service';
 import { SharedModule } from './shared/shared.module';
+import { CampaignModule } from './campaign/campaign.module';
 
 @Module({
   imports: [
@@ -31,7 +32,8 @@ import { SharedModule } from './shared/shared.module';
     }),
     LocalistModule,
     InstitutionModule,
-    SharedModule
+    SharedModule,
+    CampaignModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService], // Register the resolver here

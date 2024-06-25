@@ -32,6 +32,8 @@ async function createCampaign() {
       campaignEndAt,
       campaignDuration,
       showOnApp: true,
+      eventDay:new Date('2024-07-01'),
+      eventTime : new Date('2024-07-01')
     },
   });
 

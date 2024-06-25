@@ -53,12 +53,12 @@ model Campaign {
   url              String?
   type             CampaignType
   tags             CampaignTag[] // Many-to-many via join model
-  listingUpload    String?
+  campaignImage    String?
   campaignStartAt  DateTime
   campaignEndAt    DateTime
   campaignDuration Int // Duration in days
-  eventDay         DateTime? // Optional event date
-  eventTime        DateTime? // Optional event time
+  eventDay         DateTime
+  eventTime        DateTime
   showOnApp        Boolean       @default(true)
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @default(now()) @updatedAt
