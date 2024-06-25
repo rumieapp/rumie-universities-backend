@@ -1,0 +1,112 @@
+// schema.prisma
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+}
+
+enum UserType {
+  ADMIN
+  INSTITUTION
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userType  UserType
+  userName  String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model PassCode {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId // Institution ID
+  passCode  String
+  isPassed  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("pass_codes")
+}
+
+enum CampaignType {
+  LISTING
+  BANNER
+  POPUP
+}
+
+model Campaign {
+  id               String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String        @db.ObjectId // Institution ID
+  title            String
+  url              String?
+  type             CampaignType
+  tags             CampaignTag[] // Many-to-many via join model
+  listingUpload    String?
+  campaignStartAt  DateTime
+  campaignEndAt    DateTime
+  campaignDuration Int // Duration in days
+  eventDay         DateTime? // Optional event date
+  eventTime        DateTime? // Optional event time
+  showOnApp        Boolean       @default(true)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @default(now()) @updatedAt
+
+  @@map("campaigns")
+}
+
+model Tag {
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  campaigns CampaignTag[] // Many-to-many via join model
+
+  @@map("tags")
+}
+
+model CampaignTag {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  campaignId String    @db.ObjectId
+  tagId      String    @db.ObjectId
+  campaign   Campaign? @relation(fields: [campaignId], references: [id])
+  tag        Tag?      @relation(fields: [tagId], references: [id])
+
+  @@unique([campaignId, tagId])
+  @@map("campaign_tags")
+}
+
+model InstitutionSetting {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String   @db.ObjectId // Institution ID
+  institutionName String
+  slug            String   @unique
+  pinCode         String
+  logo            String?
+  profilePicture  String?
+  schoolColor     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("institution_settings")
+}
+
+model SupportRequest {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId // Institution ID
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("support_requests")
+}

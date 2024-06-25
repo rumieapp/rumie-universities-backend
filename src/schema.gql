@@ -1,0 +1,117 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type EventInstanceDto {
+  id: ID!
+  event_id: ID!
+  start: String!
+  end: String
+  ranking: Float!
+  all_day: Boolean!
+  num_attending: Float!
+}
+
+type EventGeoDto {
+  latitude: String
+  longitude: String
+  street: String
+  city: String
+  state: String
+  country: String
+  zip: String
+}
+
+type EventDto {
+  id: ID!
+  title: String!
+  url: String
+  updated_at: String!
+  created_at: String!
+  facebook_id: String
+  first_date: String!
+  last_date: String!
+  hashtag: String
+  urlname: String!
+  user_id: Float
+  directions: String
+  allows_reviews: Boolean!
+  allows_attendance: Boolean!
+  location: String!
+  room_number: String
+  location_name: String!
+  status: String!
+  experience: String!
+  stream_url: String
+  stream_info: String
+  stream_embed_code: String
+  created_by: Float
+  updated_by: Float
+  conference_event_id: Float
+  kind: String!
+  city_id: Float
+  neighborhood_id: Float
+  school_id: Float!
+  campus_id: Float
+  recurring: Boolean!
+  free: Boolean!
+  private: Boolean!
+  verified: Boolean!
+  rejected: Boolean!
+  sponsored: Boolean!
+  venue_id: Float
+  ticket_url: String
+  ticket_cost: String
+  has_register: Boolean!
+  keywords: [String!]!
+  tags: [String!]!
+  description_text: String!
+  photo_id: Float
+  detail_views: Float!
+  address: String
+  description: String!
+  featured: Boolean!
+  geo: EventGeoDto!
+  filters: JSON!
+  custom_fields: JSON!
+  localist_url: String!
+  localist_ics_url: String!
+  photo_url: String!
+  venue_url: String
+  event_instances: [EventInstanceDto!]!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+type EventResponse {
+  events: [EventDto!]!
+  page: JSON!
+  date: JSON!
+}
+
+type InstitutionDto {
+  id: ID!
+  userId: String!
+  institutionName: String!
+  slug: String!
+  pinCode: String!
+  logo: String
+  profilePicture: String
+  schoolColor: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  getAllEvents: EventResponse!
+  getEvent(id: String!): EventResponse
+  getInstitutionBySlug(slug: String!): InstitutionDto
+}
