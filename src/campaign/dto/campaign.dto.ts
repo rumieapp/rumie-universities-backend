@@ -1,6 +1,7 @@
 import { ObjectType, Field, ID, Int, InputType } from '@nestjs/graphql';
-import { CampaignType } from '@prisma/client';
-
+import { IsNotEmpty, IsOptional, IsDateString, IsArray, IsUrl, IsEnum, IsBoolean } from 'class-validator';
+import { CampaignType } from 'src/enums/campaign-type.enum'; // Import the registered CampaignType enum
+import { Tag } from 'src/enums/campaign-tag.enum';
 @ObjectType()
 export class CampaignDto {
   @Field(() => ID)
@@ -15,11 +16,13 @@ export class CampaignDto {
   @Field({ nullable: true })
   url?: string;
 
-  @Field(() => String)
+  @Field(() => CampaignType) // Use the registered CampaignType enum
+  @IsEnum(CampaignType)
   type: CampaignType;
 
-  @Field(() => [String], { nullable: true })
-  tags?: string[];
+  @Field(() => Tag)
+  @IsEnum(Tag)
+  tag: Tag;
 
   @Field({ nullable: true })
   campaignImage?: string;
@@ -52,38 +55,48 @@ export class CampaignDto {
 @InputType()
 export class CreateCampaignInput {
   @Field()
+  @IsNotEmpty()
   userId: string;
 
   @Field()
+  @IsNotEmpty()
   title: string;
 
   @Field({ nullable: true })
+  @IsOptional()
+  @IsUrl()
   url?: string;
 
-  @Field(() => String)
+  @Field(() => CampaignType) // Use the registered CampaignType enum
+  @IsEnum(CampaignType)
   type: CampaignType;
 
-  @Field(() => [String], { nullable: true })
-  tags?: string[];
+  @Field(() => Tag) // Use the registered Tag enum
+  @IsEnum(Tag)
+  tag: Tag;
 
   @Field({ nullable: true })
+  @IsOptional()
+  @IsUrl()
   campaignImage?: string;
 
   @Field()
+  @IsNotEmpty()
   campaignStartAt: Date;
 
   @Field()
+  @IsNotEmpty()
   campaignEndAt: Date;
 
-  @Field(() => Int)
-  campaignDuration: number;
-
   @Field()
+  @IsNotEmpty()
   eventDay: Date;
 
   @Field()
+  @IsNotEmpty()
   eventTime: Date;
 
   @Field()
+  @IsBoolean()
   showOnApp: boolean;
 }

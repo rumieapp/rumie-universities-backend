@@ -46,17 +46,23 @@ enum CampaignType {
   POPUP
 }
 
+enum Tag {
+  EVENT
+  SPORT
+  RESOURCES
+}
+
 model Campaign {
   id               String        @id @default(auto()) @map("_id") @db.ObjectId
   userId           String        @db.ObjectId // Institution ID
   title            String
   url              String?
   type             CampaignType
-  tags             CampaignTag[] // Many-to-many via join model
+  tag              Tag
   campaignImage    String?
   campaignStartAt  DateTime
   campaignEndAt    DateTime
-  campaignDuration Int // Duration in days
+  campaignDuration Int
   eventDay         DateTime
   eventTime        DateTime
   showOnApp        Boolean       @default(true)
@@ -64,25 +70,6 @@ model Campaign {
   updatedAt        DateTime      @default(now()) @updatedAt
 
   @@map("campaigns")
-}
-
-model Tag {
-  id        String        @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  campaigns CampaignTag[] // Many-to-many via join model
-
-  @@map("tags")
-}
-
-model CampaignTag {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  campaignId String    @db.ObjectId
-  tagId      String    @db.ObjectId
-  campaign   Campaign? @relation(fields: [campaignId], references: [id])
-  tag        Tag?      @relation(fields: [tagId], references: [id])
-
-  @@unique([campaignId, tagId])
-  @@map("campaign_tags")
 }
 
 model InstitutionSetting {
