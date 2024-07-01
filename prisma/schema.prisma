@@ -17,6 +17,13 @@ enum UserType {
   INSTITUTION
 }
 
+type Session {
+  token       String
+  deviceModel String
+  valid       Boolean  @default(true)
+  started     DateTime @default(now())
+  lastSeen    DateTime @default(now())
+}
 model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userType  UserType
@@ -25,7 +32,7 @@ model User {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
+  sessions  Session[]
   @@map("users")
 }
 
@@ -63,8 +70,7 @@ model Campaign {
   campaignStartAt  DateTime
   campaignEndAt    DateTime
   campaignDuration Int
-  eventDay         DateTime
-  eventTime        DateTime
+  eventDayTime     DateTime
   showOnApp        Boolean       @default(true)
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @default(now()) @updatedAt
@@ -72,19 +78,18 @@ model Campaign {
   @@map("campaigns")
 }
 
-model InstitutionSetting {
+model Institution {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId          String   @db.ObjectId // Institution ID
   institutionName String
   slug            String   @unique
   pinCode         String
   logo            String?
   profilePicture  String?
   schoolColor     String?
+  sessions        Session[]
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
-
-  @@map("institution_settings")
+  @@map("institutions")
 }
 
 model SupportRequest {

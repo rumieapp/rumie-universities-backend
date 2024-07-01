@@ -33,8 +33,7 @@ async function createCampaign() {
       campaignEndAt,
       campaignDuration,
       showOnApp: true,
-      eventDay:new Date('2024-07-01'),
-      eventTime : new Date('2024-07-01')
+      eventDayTime:new Date('2024-07-01'),
     },
   });
 
@@ -49,9 +48,8 @@ async function createDemoInstitution() {
   //     password: "securepassword",
   //   },
   // });
-  const newInstitution = await prisma.institutionSetting.createMany({
+  const newInstitution = await prisma.institution.createMany({
     data:{
-      userId: '667a6012441183fb46ddd02e',
       institutionName: "Yale University",
       slug: 'yale-university',
       pinCode:'123456',

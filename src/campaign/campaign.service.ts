@@ -1,41 +1,47 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CampaignDto, CreateCampaignInput } from './dto/campaign.dto';
+import { CampaignDto, CreateCampaignInput, UpdateCampaignInput } from './dto/campaign.dto';
 import { differenceInDays } from 'date-fns';
 import { CampaignType as PrismaCampaignType } from '@prisma/client';
 import { CampaignType } from 'src/enums/campaign-type.enum';
 import { Tag } from 'src/enums/campaign-tag.enum';
 import { CampaignWithAnalyticsDto } from './dto/campaign-with-analytics.dto';
+import { CampaignFilterInput } from './dto/campaign-filters.input';
 
 @Injectable()
 export class CampaignService {
   constructor(private prisma: PrismaService) {}
 
-  async createCampaign(data: CreateCampaignInput): Promise<CampaignDto> {
+  async createCampaign(institutionId, data: CreateCampaignInput): Promise<CampaignDto> {
     const campaignStartAt = new Date(data.campaignStartAt);
     const campaignEndAt = new Date(data.campaignEndAt);
-    const eventDay = new Date(data.eventDay);
-    const eventTime = new Date(data.eventTime);
+    const eventDayTime = new Date(data.eventDayTime);
     const campaignDuration = differenceInDays(campaignEndAt, campaignStartAt);
 
     const createdCampaign = await this.prisma.campaign.create({
       data: {
         ...data,
+        userId: institutionId,
         campaignDuration,
         campaignStartAt,
         campaignEndAt,
         type: data.type as PrismaCampaignType,
         tag: data.tag as Tag,
-        eventDay,
-        eventTime,
+        eventDayTime,
       },
     });
 
     return this.mapToDto(createdCampaign);
   }
 
-  async getAllCampaigns(): Promise<CampaignDto[]> {
-    const campaigns = await this.prisma.campaign.findMany();
+  async getAllCampaigns(institutionId, filters?: CampaignFilterInput): Promise<CampaignDto[]> {  
+    const where: any = {userId:institutionId};
+    if (filters) {
+      if (typeof filters.isShownOnApp !== 'undefined') {
+        where.showOnApp = filters.isShownOnApp;
+      }
+    }
+    const campaigns = await this.prisma.campaign.findMany({ where });
     return campaigns.map(this.mapToDto);
   }
 
@@ -55,13 +61,47 @@ export class CampaignService {
 
     return {
       ...this.mapToDto(campaign),
-      uniqueImpression: 0,
-      clicks: 0,
-      ctr: 0,
-      male: 0,
-      female: 0,
+      uniqueImpression: 2500000,
+      clicks: 300000,
+      ctr: 100,
+      male: 100000,
+      female: 999999,
     };
   }
+
+
+  async updateCampaign(userId:string,  campaignId: string, data: UpdateCampaignInput): Promise<CampaignDto> {
+
+    const existingCampaign = await this.prisma.campaign.findUnique({
+      where: { id: campaignId },
+    });
+  
+    if (!existingCampaign) {
+      throw new NotFoundException(`Campaign with ID ${campaignId} not found`);
+    }
+  
+    if (existingCampaign.userId !== userId) {
+      throw new ForbiddenException('You are not allowed to update this campaign');
+    }
+    
+    const campaignStartAt = new Date(data.campaignStartAt);
+    const campaignEndAt = new Date(data.campaignEndAt);
+    const eventDayTime = new Date(data.eventDayTime);
+    const campaignDuration = differenceInDays(campaignEndAt, campaignStartAt);
+
+    const campaign = await this.prisma.campaign.update({
+      where: { id: campaignId },
+      data: {
+        ...data,
+        campaignDuration,
+        campaignStartAt,
+        campaignEndAt,
+        eventDayTime
+      },
+    });
+    return this.mapToDto(campaign);
+  }
+
 
   private mapToDto(campaign: any): CampaignDto {
     return {
