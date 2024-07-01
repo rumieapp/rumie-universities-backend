@@ -37,10 +37,7 @@ export class CampaignDto {
   campaignDuration: number;
 
   @Field()
-  eventDay: Date;
-
-  @Field()
-  eventTime: Date;
+  eventDayTime: Date;
 
   @Field()
   showOnApp: boolean;
@@ -54,9 +51,6 @@ export class CampaignDto {
 
 @InputType()
 export class CreateCampaignInput {
-  @Field()
-  @IsNotEmpty()
-  userId: string;
 
   @Field()
   @IsNotEmpty()
@@ -90,11 +84,50 @@ export class CreateCampaignInput {
 
   @Field()
   @IsNotEmpty()
-  eventDay: Date;
+  eventDayTime: Date;
+
+  @Field()
+  @IsBoolean()
+  showOnApp: boolean;
+}
+
+@InputType()
+export class UpdateCampaignInput {
+
 
   @Field()
   @IsNotEmpty()
-  eventTime: Date;
+  title: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsUrl()
+  url?: string;
+
+  @Field(() => CampaignType)
+  @IsEnum(CampaignType)
+  type: CampaignType;
+
+  @Field(() => Tag)
+  @IsEnum(Tag)
+  tag: Tag;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsUrl()
+  campaignImage?: string;
+
+  @Field()
+  @IsNotEmpty()
+  campaignStartAt: Date;
+
+  @Field()
+  @IsNotEmpty()
+  campaignEndAt: Date;
+
+  @Field()
+  @IsNotEmpty()
+  eventDayTime: Date;
 
   @Field()
   @IsBoolean()

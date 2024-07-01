@@ -1,17 +1,20 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 
-@ObjectType()
-export class InstitutionDto {
-  @Field(() => ID)
-  id: string;
+import { IsNotEmpty } from 'class-validator';
 
+
+@InputType()
+export class RegisterInstitutionDto {
   @Field()
+  @IsNotEmpty()
   institutionName: string;
 
   @Field()
+  @IsNotEmpty()
   slug: string;
 
   @Field()
+  @IsNotEmpty()
   pinCode: string;
 
   @Field({ nullable: true })
@@ -23,9 +26,4 @@ export class InstitutionDto {
   @Field({ nullable: true })
   schoolColor?: string;
 
-  @Field()
-  createdAt: Date;
-
-  @Field()
-  updatedAt: Date;
 }

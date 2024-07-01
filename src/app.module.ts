@@ -6,12 +6,13 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { join } from 'path';
-import { UserResolver } from './user.resolver';
 import { LocalistModule } from './localist/localist.module';
 import { InstitutionModule } from './institution/institution.module';
 import { PrismaService } from './prisma/prisma.service';
 import { SharedModule } from './shared/shared.module';
 import { CampaignModule } from './campaign/campaign.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -30,10 +31,19 @@ import { CampaignModule } from './campaign/campaign.module';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       playground: true,
     }),
+    // GraphQLModule.forRoot<ApolloDriverConfig>({
+    //   driver: ApolloDriver,
+    //   autoSchemaFile: true,
+    //   context: ({ raw }) => {
+    //     return { authToken: extractBearerToken(raw.headers) };
+    //   },
+    // }),
     LocalistModule,
     InstitutionModule,
     SharedModule,
-    CampaignModule
+    CampaignModule,
+    AuthModule,
+    UsersModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService], // Register the resolver here

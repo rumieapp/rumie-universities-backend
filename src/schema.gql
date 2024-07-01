@@ -94,7 +94,6 @@ type EventResponse {
 
 type InstitutionDto {
   id: ID!
-  userId: String!
   institutionName: String!
   slug: String!
   pinCode: String!
@@ -121,8 +120,7 @@ type CampaignDto {
   campaignStartAt: DateTime!
   campaignEndAt: DateTime!
   campaignDuration: Int!
-  eventDay: DateTime!
-  eventTime: DateTime!
+  eventDayTime: DateTime!
   showOnApp: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -153,8 +151,7 @@ type CampaignWithAnalyticsDto {
   campaignStartAt: DateTime!
   campaignEndAt: DateTime!
   campaignDuration: Int!
-  eventDay: DateTime!
-  eventTime: DateTime!
+  eventDayTime: DateTime!
   showOnApp: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -165,20 +162,39 @@ type CampaignWithAnalyticsDto {
   female: Int!
 }
 
+type AuthDto {
+  accessToken: String!
+}
+
 type Query {
   getAllEvents: EventResponse!
   getEvent(id: String!): EventResponse
+  me: InstitutionDto!
   getInstitutionBySlug(slug: String!): InstitutionDto
-  getAllCampaigns: [CampaignDto!]!
+  getAllCampaigns(filters: CampaignFilterInput): [CampaignDto!]!
   getCampaignById(campaignId: String!): CampaignWithAnalyticsDto!
 }
 
+input CampaignFilterInput {
+  isShownOnApp: Boolean
+}
+
 type Mutation {
+  updateInstitutionSetting(input: UpdateInstitutionSettingInput!): InstitutionDto!
   createCampaign(createCampaignInput: CreateCampaignInput!): CampaignDto!
+  updateCampaign(campaignId: ID!, updateCampaignInput: UpdateCampaignInput!): CampaignDto!
+  registerInstitution(registerInstitutionDto: RegisterInstitutionDto!): AuthDto!
+  loginInstitution(loginInstitutionDto: LoginInstitutionDto!): AuthDto!
+}
+
+input UpdateInstitutionSettingInput {
+  institutionName: String!
+  pinCode: String!
+  profilePicture: String!
+  schoolColor: String!
 }
 
 input CreateCampaignInput {
-  userId: String!
   title: String!
   url: String
   type: CampaignType!
@@ -186,7 +202,32 @@ input CreateCampaignInput {
   campaignImage: String
   campaignStartAt: DateTime!
   campaignEndAt: DateTime!
-  eventDay: DateTime!
-  eventTime: DateTime!
+  eventDayTime: DateTime!
   showOnApp: Boolean!
+}
+
+input UpdateCampaignInput {
+  title: String!
+  url: String
+  type: CampaignType!
+  tag: Tag!
+  campaignImage: String
+  campaignStartAt: DateTime!
+  campaignEndAt: DateTime!
+  eventDayTime: DateTime!
+  showOnApp: Boolean!
+}
+
+input RegisterInstitutionDto {
+  institutionName: String!
+  slug: String!
+  pinCode: String!
+  logo: String
+  profilePicture: String
+  schoolColor: String
+}
+
+input LoginInstitutionDto {
+  slug: String!
+  pinCode: String!
 }
