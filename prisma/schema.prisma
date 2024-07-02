@@ -93,12 +93,20 @@ model Institution {
 }
 
 model SupportRequest {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String   @db.ObjectId // Institution ID
+  id        String                @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String                @db.ObjectId // Institution ID
+  ticketId  String
   email     String
   message   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  status    SupportStatusType     @default(OPEN)
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @updatedAt
 
   @@map("support_requests")
+}
+
+enum SupportStatusType {
+  OPEN
+  IN_PROGRESS
+  CLOSED
 }

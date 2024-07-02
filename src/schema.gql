@@ -166,6 +166,24 @@ type AuthDto {
   accessToken: String!
 }
 
+type SupportRequestDto {
+  id: ID!
+  userId: String!
+  ticketId: String!
+  email: String!
+  message: String!
+  status: SupportStatusType!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""The types of the status of support request"""
+enum SupportStatusType {
+  OPEN
+  IN_PROGRESS
+  CLOSED
+}
+
 type Query {
   getAllEvents: EventResponse!
   getEvent(id: String!): EventResponse
@@ -173,10 +191,15 @@ type Query {
   getInstitutionBySlug(slug: String!): InstitutionDto
   getAllCampaigns(filters: CampaignFilterInput): [CampaignDto!]!
   getCampaignById(campaignId: String!): CampaignWithAnalyticsDto!
+  getSupportRequestList(filters: SupportRequestFilterInput): [SupportRequestDto!]!
 }
 
 input CampaignFilterInput {
   isShownOnApp: Boolean
+}
+
+input SupportRequestFilterInput {
+  status: SupportStatusType
 }
 
 type Mutation {
@@ -185,6 +208,7 @@ type Mutation {
   updateCampaign(campaignId: ID!, updateCampaignInput: UpdateCampaignInput!): CampaignDto!
   registerInstitution(registerInstitutionDto: RegisterInstitutionDto!): AuthDto!
   loginInstitution(loginInstitutionDto: LoginInstitutionDto!): AuthDto!
+  createSupportRequest(inputs: CreateSupportRequestInput!): SupportRequestDto!
 }
 
 input UpdateInstitutionSettingInput {
@@ -230,4 +254,9 @@ input RegisterInstitutionDto {
 input LoginInstitutionDto {
   slug: String!
   pinCode: String!
+}
+
+input CreateSupportRequestInput {
+  email: String!
+  message: String!
 }

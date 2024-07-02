@@ -13,6 +13,7 @@ import { SharedModule } from './shared/shared.module';
 import { CampaignModule } from './campaign/campaign.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { SupportRequestModule } from './support-request/support-request.module';
 
 @Module({
   imports: [
@@ -31,19 +32,13 @@ import { UsersModule } from './users/users.module';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       playground: true,
     }),
-    // GraphQLModule.forRoot<ApolloDriverConfig>({
-    //   driver: ApolloDriver,
-    //   autoSchemaFile: true,
-    //   context: ({ raw }) => {
-    //     return { authToken: extractBearerToken(raw.headers) };
-    //   },
-    // }),
     LocalistModule,
     InstitutionModule,
     SharedModule,
     CampaignModule,
     AuthModule,
-    UsersModule
+    UsersModule,
+    SupportRequestModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService], // Register the resolver here
