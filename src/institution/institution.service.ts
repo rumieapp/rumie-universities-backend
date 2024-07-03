@@ -3,6 +3,7 @@ import { PrismaService } from '../prisma/prisma.service'; // Make sure you have 
 import { InstitutionDto } from './dto/institution.dto';
 import { UpdateInstitutionSettingInput } from './dto/update-institution-setting.input';
 import { Institution } from '@prisma/client';
+import { GenderWise, UniversityStats } from './dto/university-stats.dto';
 
 @Injectable()
 export class InstitutionService {
@@ -26,6 +27,18 @@ export class InstitutionService {
       where: { id },
       data,
     });
+  }
+
+  async getUniversityStats(): Promise<UniversityStats> {
+    let results = new UniversityStats();
+    results.impression = [100, 200, 300, 400];
+    results.genderWise = {
+      male: 4000,
+      female: 5000
+    } as GenderWise;
+    results.listing = 500000;
+    results.totalCampaign = 1000000;
+    return results;
   }
 
 }

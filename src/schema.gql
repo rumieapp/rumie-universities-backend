@@ -92,6 +92,18 @@ type EventResponse {
   date: JSON!
 }
 
+type GenderWise {
+  male: Int!
+  female: Int!
+}
+
+type UniversityStats {
+  impression: [Int!]!
+  genderWise: GenderWise!
+  listing: Int!
+  totalCampaign: Int!
+}
+
 type InstitutionDto {
   id: ID!
   institutionName: String!
@@ -189,6 +201,7 @@ type Query {
   getEvent(id: String!): EventResponse
   me: InstitutionDto!
   getInstitutionBySlug(slug: String!): InstitutionDto
+  getUniversityStats: UniversityStats!
   getAllCampaigns(filters: CampaignFilterInput): [CampaignDto!]!
   getCampaignById(campaignId: String!): CampaignWithAnalyticsDto!
   getSupportRequestList(filters: SupportRequestFilterInput): [SupportRequestDto!]!

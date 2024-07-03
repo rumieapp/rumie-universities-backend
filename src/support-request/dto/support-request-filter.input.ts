@@ -7,3 +7,4 @@ export class SupportRequestFilterInput {
   @Field(() => SupportStatusType, { nullable: true })
   status?: SupportStatusType;
 }
+

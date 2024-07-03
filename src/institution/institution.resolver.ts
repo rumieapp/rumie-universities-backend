@@ -5,6 +5,7 @@ import { UpdateInstitutionSettingInput } from './dto/update-institution-setting.
 import { Institution } from '@prisma/client';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { UniversityStats } from './dto/university-stats.dto';
 
 @Resolver(() => InstitutionDto)
 export class InstitutionResolver {
@@ -37,5 +38,13 @@ export class InstitutionResolver {
     const id = context.req.user.id;
     console.log(id)
     return this.institutionService.updateInstitutionSetting(id, data);
+  }
+  @Query( ()=> UniversityStats)
+  @UseGuards(JwtAuthGuard)
+  async getUniversityStats(
+    @Context() context:any
+  ){
+    const user = context.req.user;
+    return await this.institutionService.getUniversityStats();
   }
 }
