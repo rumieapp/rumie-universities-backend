@@ -108,9 +108,8 @@ type InstitutionDto {
   id: ID!
   institutionName: String!
   slug: String!
-  pinCode: String!
+  passCode: String!
   logo: String
-  profilePicture: String
   schoolColor: String
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -201,6 +200,7 @@ type Query {
   getEvent(id: String!): EventResponse
   me: InstitutionDto!
   getInstitutionBySlug(slug: String!): InstitutionDto
+  getInstitutionList: [InstitutionDto!]
   getUniversityStats: UniversityStats!
   getAllCampaigns(filters: CampaignFilterInput): [CampaignDto!]!
   getCampaignById(campaignId: String!): CampaignWithAnalyticsDto!
@@ -226,8 +226,8 @@ type Mutation {
 
 input UpdateInstitutionSettingInput {
   institutionName: String!
-  pinCode: String!
-  profilePicture: String!
+  passCode: String!
+  logo: String!
   schoolColor: String!
 }
 
@@ -258,15 +258,14 @@ input UpdateCampaignInput {
 input RegisterInstitutionDto {
   institutionName: String!
   slug: String!
-  pinCode: String!
+  passCode: String!
   logo: String
-  profilePicture: String
   schoolColor: String
 }
 
 input LoginInstitutionDto {
   slug: String!
-  pinCode: String!
+  passCode: String!
 }
 
 input CreateSupportRequestInput {

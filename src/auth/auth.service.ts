@@ -18,11 +18,11 @@ export class AuthService {
     private readonly prisma: PrismaService,
   ) {}
 
-  async validateInstitution(slug: string, pinCode: string): Promise<any> {
+  async validateInstitution(slug: string, passCode: string): Promise<any> {
     const institution = await this.prisma.institution.findUnique({
       where: { slug },
     });
-    if (institution && institution.pinCode === pinCode) {
+    if (institution && institution.passCode === passCode) {
       return institution;
     }
     return null;
@@ -63,9 +63,8 @@ export class AuthService {
       data: {
         institutionName: data.institutionName,
         slug: data.slug,
-        pinCode: data.pinCode,
+        passCode: data.passCode,
         logo: data.logo,
-        profilePicture: data.profilePicture,
         schoolColor: data.schoolColor,
       },
     });

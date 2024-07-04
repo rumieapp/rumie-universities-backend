@@ -15,6 +15,10 @@ export class InstitutionService {
     });
   }
 
+  async getInstitutionList(): Promise<InstitutionDto[]>{
+    return this.prisma.institution.findMany();
+  }
+
 
   async updateInstitutionSetting(id: string, data: UpdateInstitutionSettingInput): Promise<Institution> {
     const institutionSetting = await this.prisma.institution.findUnique({ where: { id } });

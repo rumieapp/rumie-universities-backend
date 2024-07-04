@@ -52,7 +52,7 @@ async function createDemoInstitution() {
     data:{
       institutionName: "Yale University",
       slug: 'yale-university',
-      pinCode:'123456',
+      passCode:'123456',
       logo: 'https://mvp-lit-list-dev.s3.eu-west-2.amazonaws.com/og/f564d8c7680b638b9b104266621edd51.svg',
       schoolColor:'#009878'
     }

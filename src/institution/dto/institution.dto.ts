@@ -12,13 +12,10 @@ export class InstitutionDto {
   slug: string;
 
   @Field()
-  pinCode: string;
+  passCode: string;
 
   @Field({ nullable: true })
   logo?: string;
-
-  @Field({ nullable: true })
-  profilePicture?: string;
 
   @Field({ nullable: true })
   schoolColor?: string;

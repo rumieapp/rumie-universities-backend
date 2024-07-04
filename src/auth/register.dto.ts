@@ -15,13 +15,10 @@ export class RegisterInstitutionDto {
 
   @Field()
   @IsNotEmpty()
-  pinCode: string;
+  passCode: string;
 
   @Field({ nullable: true })
   logo?: string;
-
-  @Field({ nullable: true })
-  profilePicture?: string;
 
   @Field({ nullable: true })
   schoolColor?: string;
