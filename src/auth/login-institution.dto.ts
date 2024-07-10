@@ -9,5 +9,5 @@ export class LoginInstitutionDto {
 
   @Field()
   @IsNotEmpty()
-  pinCode: string;
+  passCode: string;
 }

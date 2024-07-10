@@ -29,6 +29,11 @@ export class InstitutionResolver {
     return this.institutionService.getInstitutionBySlug(slug);
   }
 
+  @Query( ()=> [InstitutionDto], {nullable:true})
+  async getInstitutionList(): Promise<InstitutionDto[]>{
+    return this.institutionService.getInstitutionList();
+  }
+
   @Mutation(() => InstitutionDto)
   @UseGuards(JwtAuthGuard)
   async updateInstitutionSetting(
@@ -36,7 +41,6 @@ export class InstitutionResolver {
     @Args('input') data: UpdateInstitutionSettingInput
   ): Promise<Institution> {
     const id = context.req.user.id;
-    console.log(id)
     return this.institutionService.updateInstitutionSetting(id, data);
   }
   @Query( ()=> UniversityStats)

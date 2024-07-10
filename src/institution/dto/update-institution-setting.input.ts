@@ -9,11 +9,11 @@ export class UpdateInstitutionSettingInput {
 
   @Field()
   @IsNotEmpty()
-  pinCode: string;
+  passCode: string;
 
   @Field()
   @IsUrl()
-  profilePicture: string;
+  logo?: string;
 
   @Field()
   @IsNotEmpty()

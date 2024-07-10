@@ -19,7 +19,7 @@ export class AuthResolver {
   async loginInstitution(
     @Args('loginInstitutionDto') loginInstitutionDto: LoginInstitutionDto,
   ): Promise<AuthDto> {
-    const institution = await this.authService.validateInstitution(loginInstitutionDto.slug, loginInstitutionDto.pinCode);
+    const institution = await this.authService.validateInstitution(loginInstitutionDto.slug, loginInstitutionDto.passCode);
     if (!institution) {
       throw new Error('Invalid credentials');
     }

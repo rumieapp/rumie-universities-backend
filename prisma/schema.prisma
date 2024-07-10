@@ -82,9 +82,8 @@ model Institution {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
   institutionName String
   slug            String   @unique
-  pinCode         String
+  passCode        String
   logo            String?
-  profilePicture  String?
   schoolColor     String?
   sessions        Session[]
   createdAt       DateTime @default(now())
