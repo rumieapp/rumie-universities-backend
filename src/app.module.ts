@@ -40,7 +40,7 @@ import { ScrapperModule } from './scraper/scraper.module';
     AuthModule,
     UsersModule,
     SupportRequestModule,
-    ScrapperModule,
+    //ScrapperModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService], // Register the resolver here
