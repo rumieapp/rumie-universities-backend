@@ -14,7 +14,7 @@ import { CampaignModule } from './campaign/campaign.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { SupportRequestModule } from './support-request/support-request.module';
-import { ScrapperModule } from './scraper/scraper.module';
+//import { ScrapperModule } from './scraper/scraper.module';
 
 @Module({
   imports: [
