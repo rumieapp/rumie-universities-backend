@@ -102,6 +102,18 @@ export class CampaignService {
     return this.mapToDto(campaign);
   }
 
+  async getCampaignsByInstitutionId(institutionId: string): Promise<CampaignDto[]> {
+    const campaigns = await this.prisma.campaign.findMany({
+      where: { userId: institutionId },
+    });
+
+    if (!campaigns.length) {
+      throw new NotFoundException(`No campaigns found for user with ID ${institutionId}`);
+    }
+
+    return campaigns.map(this.mapToDto);
+  }
+
 
   private mapToDto(campaign: any): CampaignDto {
     return {
