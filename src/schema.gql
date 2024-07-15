@@ -204,6 +204,7 @@ type Query {
   getUniversityStats: UniversityStats!
   getAllCampaigns(filters: CampaignFilterInput): [CampaignDto!]!
   getCampaignById(campaignId: String!): CampaignWithAnalyticsDto!
+  getCampaignsByInstitutionId(institutionId: ID!): [CampaignDto!]!
   getSupportRequestList(filters: SupportRequestFilterInput): [SupportRequestDto!]!
 }
 

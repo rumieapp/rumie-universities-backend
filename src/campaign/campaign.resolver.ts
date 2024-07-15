@@ -49,4 +49,14 @@ export class CampaignResolver {
     return this.campaignService.updateCampaign(userId, campaignId, updateCampaignInput);
   }
 
+  @Query(() => [CampaignDto])
+  async getCampaignsByInstitutionId(
+    @Args('institutionId', { type: () => ID }) institutionId: string,
+  ): Promise<CampaignDto[]> {
+    return this.campaignService.getCampaignsByInstitutionId(institutionId);
+  }
+
+ 
+
+
 }
