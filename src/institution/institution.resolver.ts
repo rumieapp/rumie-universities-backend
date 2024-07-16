@@ -51,4 +51,11 @@ export class InstitutionResolver {
     const user = context.req.user;
     return await this.institutionService.getUniversityStats();
   }
+
+  @Query(() => InstitutionDto)
+  async getInstitutionById(
+    @Args('institutionId', { type: () => ID }) institutionId: string,
+  ): Promise<InstitutionDto> {
+    return this.institutionService.getInstitutionById(institutionId);
+  }
 }

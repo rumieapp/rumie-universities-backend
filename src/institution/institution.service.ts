@@ -20,6 +20,18 @@ export class InstitutionService {
     });
   }
 
+  async getInstitutionById(institutionId: string): Promise<InstitutionDto> {
+    const institution = await this.prisma.institution.findUnique({
+      where: { id: institutionId },
+    });
+
+    if (!institution) {
+      throw new NotFoundException(`Institution with ID ${institutionId} not found`);
+    }
+
+    return institution;
+  }
+
   async getInstitutionList(): Promise<InstitutionDto[]> {
     const institutions = await this.prisma.institution.findMany();
     return institutions.map((institution) => {
