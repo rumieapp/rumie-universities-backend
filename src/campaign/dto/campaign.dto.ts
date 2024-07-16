@@ -1,5 +1,14 @@
 import { ObjectType, Field, ID, Int, InputType } from '@nestjs/graphql';
-import { IsNotEmpty, IsOptional, IsDateString, IsArray, IsUrl, IsEnum, IsBoolean } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsDateString,
+  IsArray,
+  IsUrl,
+  IsEnum,
+  IsBoolean,
+  IsString,
+} from 'class-validator';
 import { CampaignType } from 'src/enums/campaign-type.enum'; // Import the registered CampaignType enum
 import { Tag } from 'src/enums/campaign-tag.enum';
 @ObjectType()
@@ -15,6 +24,12 @@ export class CampaignDto {
 
   @Field({ nullable: true })
   url?: string;
+
+  @Field({ nullable: true })
+  location?: string;
+
+  @Field({ nullable: true })
+  locationCoordinates?: string;
 
   @Field(() => CampaignType) // Use the registered CampaignType enum
   @IsEnum(CampaignType)
@@ -51,7 +66,6 @@ export class CampaignDto {
 
 @InputType()
 export class CreateCampaignInput {
-
   @Field()
   @IsNotEmpty()
   title: string;
@@ -60,6 +74,16 @@ export class CreateCampaignInput {
   @IsOptional()
   @IsUrl()
   url?: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsString()
+  location?: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsString()
+  locationCoordinates?: string;
 
   @Field(() => CampaignType) // Use the registered CampaignType enum
   @IsEnum(CampaignType)
@@ -93,8 +117,6 @@ export class CreateCampaignInput {
 
 @InputType()
 export class UpdateCampaignInput {
-
-
   @Field()
   @IsNotEmpty()
   title: string;
@@ -103,6 +125,16 @@ export class UpdateCampaignInput {
   @IsOptional()
   @IsUrl()
   url?: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsString()
+  location?: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsString()
+  locationCoordinates?: string;
 
   @Field(() => CampaignType)
   @IsEnum(CampaignType)

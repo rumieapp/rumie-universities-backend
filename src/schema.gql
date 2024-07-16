@@ -125,6 +125,8 @@ type CampaignDto {
   userId: String!
   title: String!
   url: String
+  location: String
+  locationCoordinates: String
   type: CampaignType!
   tag: Tag!
   campaignImage: String
@@ -156,6 +158,8 @@ type CampaignWithAnalyticsDto {
   userId: String!
   title: String!
   url: String
+  location: String
+  locationCoordinates: String
   type: CampaignType!
   tag: Tag!
   campaignImage: String
@@ -237,6 +241,8 @@ input UpdateInstitutionSettingInput {
 input CreateCampaignInput {
   title: String!
   url: String
+  location: String
+  locationCoordinates: String
   type: CampaignType!
   tag: Tag!
   campaignImage: String
@@ -249,6 +255,8 @@ input CreateCampaignInput {
 input UpdateCampaignInput {
   title: String!
   url: String
+  location: String
+  locationCoordinates: String
   type: CampaignType!
   tag: Tag!
   campaignImage: String
