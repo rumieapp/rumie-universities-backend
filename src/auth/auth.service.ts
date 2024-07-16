@@ -1,6 +1,10 @@
 // src/auth/auth.service.ts
 
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcryptjs';
@@ -9,6 +13,8 @@ import { AuthDto } from './auth.dto';
 import { RegisterInstitutionDto } from './register.dto';
 import { UserType } from '@prisma/client';
 import { valid } from 'joi';
+import { InstitutionDto } from 'src/institution/dto/institution.dto';
+import { CreateInstitutionWithIdInput } from './createInstitutionWithIdInput.dto';
 
 @Injectable()
 export class AuthService {
@@ -46,10 +52,9 @@ export class AuthService {
         },
       },
     });
-    return {accessToken};
+    return { accessToken };
   }
 
-  
   async registerInstitution(data: RegisterInstitutionDto): Promise<AuthDto> {
     const existingInstitution = await this.prisma.institution.findUnique({
       where: { slug: data.slug },
@@ -57,7 +62,6 @@ export class AuthService {
     if (existingInstitution) {
       throw new ConflictException('Institution already exists');
     }
-
 
     const newInstitution = await this.prisma.institution.create({
       data: {
@@ -71,5 +75,34 @@ export class AuthService {
 
     return this.login(newInstitution);
   }
+
+  async createInstitutionWithId(data: CreateInstitutionWithIdInput): Promise<InstitutionDto> {
+    const existingInstitutions = await this.prisma.institution.findMany({
+      where: {
+        OR: [
+          { id: data.id },
+          { slug: data.slug },
+        ],
+      },
+    });
+    if (existingInstitutions.length > 0) {
+      throw new ConflictException('Institution with the provided ID or slug already exists');
+    }
+
+    const newInstitution = await this.prisma.institution.create({
+      data: {
+        id: data.id,
+        institutionName: data.institutionName,
+        slug: data.slug,
+        passCode: data.passCode,
+        logo: data.logo,
+        schoolColor: data.schoolColor,
+      },
+    });
+
+    return newInstitution;
+  }
+
+  
 
 }
