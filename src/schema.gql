@@ -202,6 +202,7 @@ type Query {
   getInstitutionBySlug(slug: String!): InstitutionDto
   getInstitutionList: [InstitutionDto!]
   getUniversityStats: UniversityStats!
+  getInstitutionById(institutionId: ID!): InstitutionDto!
   getAllCampaigns(filters: CampaignFilterInput): [CampaignDto!]!
   getCampaignById(campaignId: String!): CampaignWithAnalyticsDto!
   getCampaignsByInstitutionId(institutionId: ID!): [CampaignDto!]!
