@@ -24,15 +24,17 @@ type Session {
   started     DateTime @default(now())
   lastSeen    DateTime @default(now())
 }
+
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   userType  UserType
   userName  String
-  email     String   @unique
+  email     String    @unique
   password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   sessions  Session[]
+
   @@map("users")
 }
 
@@ -60,46 +62,49 @@ enum Tag {
 }
 
 model Campaign {
-  id               String        @id @default(auto()) @map("_id") @db.ObjectId
-  userId           String        @db.ObjectId // Institution ID
-  title            String
-  url              String?
-  type             CampaignType
-  tag              Tag
-  campaignImage    String?
-  campaignStartAt  DateTime
-  campaignEndAt    DateTime
-  campaignDuration Int
-  eventDayTime     DateTime
-  showOnApp        Boolean       @default(true)
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @default(now()) @updatedAt
+  id                  String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId              String       @db.ObjectId // Institution ID
+  title               String
+  url                 String?
+  location            String?
+  locationCoordinates String?
+  type                CampaignType
+  tag                 Tag
+  campaignImage       String?
+  campaignStartAt     DateTime
+  campaignEndAt       DateTime
+  campaignDuration    Int
+  eventDayTime        DateTime
+  showOnApp           Boolean      @default(true)
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @default(now()) @updatedAt
 
   @@map("campaigns")
 }
 
 model Institution {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
   institutionName String
-  slug            String   @unique
+  slug            String    @unique
   passCode        String
   logo            String?
   schoolColor     String?
   sessions        Session[]
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
   @@map("institutions")
 }
 
 model SupportRequest {
-  id        String                @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String                @db.ObjectId // Institution ID
+  id        String            @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String            @db.ObjectId // Institution ID
   ticketId  String
   email     String
   message   String
-  status    SupportStatusType     @default(OPEN)
-  createdAt DateTime              @default(now())
-  updatedAt DateTime              @updatedAt
+  status    SupportStatusType @default(OPEN)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
 
   @@map("support_requests")
 }
