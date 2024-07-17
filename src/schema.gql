@@ -130,10 +130,10 @@ type CampaignDto {
   type: CampaignType!
   tag: Tag!
   campaignImage: String
-  campaignStartAt: DateTime!
-  campaignEndAt: DateTime!
+  campaignStartAt: String!
+  campaignEndAt: String!
   campaignDuration: Int!
-  eventDayTime: DateTime!
+  eventDayTime: String!
   showOnApp: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -163,10 +163,10 @@ type CampaignWithAnalyticsDto {
   type: CampaignType!
   tag: Tag!
   campaignImage: String
-  campaignStartAt: DateTime!
-  campaignEndAt: DateTime!
+  campaignStartAt: String!
+  campaignEndAt: String!
   campaignDuration: Int!
-  eventDayTime: DateTime!
+  eventDayTime: String!
   showOnApp: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -246,9 +246,9 @@ input CreateCampaignInput {
   type: CampaignType!
   tag: Tag!
   campaignImage: String
-  campaignStartAt: DateTime!
-  campaignEndAt: DateTime!
-  eventDayTime: DateTime!
+  campaignStartAt: String!
+  campaignEndAt: String!
+  eventDayTime: String!
   showOnApp: Boolean!
 }
 
@@ -260,9 +260,9 @@ input UpdateCampaignInput {
   type: CampaignType!
   tag: Tag!
   campaignImage: String
-  campaignStartAt: DateTime!
-  campaignEndAt: DateTime!
-  eventDayTime: DateTime!
+  campaignStartAt: String!
+  campaignEndAt: String!
+  eventDayTime: String!
   showOnApp: Boolean!
 }
 

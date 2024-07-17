@@ -5,14 +5,12 @@ import { differenceInDays } from 'date-fns';
 const prisma = new PrismaClient();
 prisma.$connect().then(console.log).catch(console.log);
 async function createCampaign() {
-
-
   const newUser = await prisma.user.create({
     data: {
-      userType:UserType.ADMIN,
-      userName:"Admin",
-      email: "admin@example.com",
-      password: "securepassword",
+      userType: UserType.ADMIN,
+      userName: 'Admin',
+      email: 'admin@example.com',
+      password: 'securepassword',
     },
   });
 
@@ -24,16 +22,16 @@ async function createCampaign() {
 
   const newCampaign = await prisma.campaign.create({
     data: {
-      userId:userId,
-      title: "New Campaign",
-      url: "https://example.com",
+      userId: userId,
+      title: 'New Campaign',
+      url: 'https://example.com',
       type: CampaignType.LISTING,
-      tag:'EVENT',
-      campaignStartAt,
-      campaignEndAt,
+      tag: 'EVENT',
+      campaignStartAt: '',
+      campaignEndAt: '',
       campaignDuration,
       showOnApp: true,
-      eventDayTime:new Date('2024-07-01'),
+      eventDayTime: '',
     },
   });
 
@@ -49,16 +47,15 @@ async function createDemoInstitution() {
   //   },
   // });
   const newInstitution = await prisma.institution.createMany({
-    data:{
-      institutionName: "Yale University",
+    data: {
+      institutionName: 'Yale University',
       slug: 'yale-university',
-      passCode:'123456',
+      passCode: '123456',
       logo: 'https://mvp-lit-list-dev.s3.eu-west-2.amazonaws.com/og/f564d8c7680b638b9b104266621edd51.svg',
-      schoolColor:'#009878'
-    }
-  })
+      schoolColor: '#009878',
+    },
+  });
   console.log(newInstitution);
-
 }
 // createCampaign()
 //   .catch(e => console.error(e))
@@ -66,7 +63,7 @@ async function createDemoInstitution() {
 //     await prisma.$disconnect();
 //   });
 createDemoInstitution()
-.catch(e => console.error(e))
-.finally(async () => {
-  await prisma.$disconnect();
-});
+  .catch((e) => console.error(e))
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
