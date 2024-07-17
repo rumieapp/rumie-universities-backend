@@ -104,22 +104,54 @@ export class CampaignService {
 
   async getCampaignsByInstitutionId(institutionId: string): Promise<CampaignDto[]> {
     const campaigns = await this.prisma.campaign.findMany({
-      where: { userId: institutionId },
+      where: { 
+        userId: institutionId,
+        showOnApp: true
+      },
     });
 
     if (!campaigns.length) {
       throw new NotFoundException(`No campaigns found for user with ID ${institutionId}`);
     }
 
-    return campaigns.map(this.mapToDto);
+    return campaigns.map(campaign => this.mapToDto(campaign));
   }
 
 
   private mapToDto(campaign: any): CampaignDto {
+    const formattedDate = this.formatDateTimestamp(campaign.eventDayTime);
+
+    console.log(formattedDate)
     return {
       ...campaign,
       type: campaign.type as CampaignType,
       tag: campaign.tag as Tag,
     };
+  }
+
+  private formatDateTimestamp(timestamp: Date) {
+    const date = new Date(timestamp);
+    const months = [
+     "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+    ];
+    const day = `${months[date.getMonth()]} ${date.getDate()}`;
+    let hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour ‘0’ should be ‘12’
+    const time = `${hours}:${minutes}${ampm}`;
+    return `${day} - ${time}`;
   }
 }
