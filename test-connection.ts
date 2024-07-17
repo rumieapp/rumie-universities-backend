@@ -34,8 +34,6 @@ async function createCampaign() {
       eventDayTime: '',
     },
   });
-
-  console.log(newCampaign);
 }
 async function createDemoInstitution() {
   // const newUser = await prisma.user.create({
