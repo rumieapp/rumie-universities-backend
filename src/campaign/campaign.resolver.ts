@@ -69,4 +69,9 @@ export class CampaignResolver {
   async getTestDev() {
     return 'test';
   }
+
+  @Query(() => String)
+  async getTestDev2() {
+    return 'test';
+  }
 }

@@ -211,6 +211,7 @@ type Query {
   getCampaignById(campaignId: String!): CampaignWithAnalyticsDto!
   getCampaignsByInstitutionId(institutionId: ID!): [CampaignDto!]!
   getTestDev: String!
+  getTestDev2: String!
   getSupportRequestList(filters: SupportRequestFilterInput): [SupportRequestDto!]!
 }
 
