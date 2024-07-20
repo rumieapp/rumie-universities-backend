@@ -70,6 +70,7 @@ model Campaign {
   locationCoordinates String?
   type                CampaignType
   tag                 Tag
+  localistId          String?
   campaignImage       String?
   campaignStartAt     String
   campaignEndAt       String
