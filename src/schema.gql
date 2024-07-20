@@ -210,7 +210,7 @@ type Query {
   getAllCampaigns(filters: CampaignFilterInput): [CampaignDto!]!
   getCampaignById(campaignId: String!): CampaignWithAnalyticsDto!
   getCampaignsByInstitutionId(institutionId: ID!): [CampaignDto!]!
-  getTest: String!
+  getTestDev: String!
   getSupportRequestList(filters: SupportRequestFilterInput): [SupportRequestDto!]!
 }
 
