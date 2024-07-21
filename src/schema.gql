@@ -153,6 +153,11 @@ enum Tag {
   RESOURCES
 }
 
+type CampaignPaginatedResponse {
+  campaigns: [CampaignDto!]!
+  totalCount: Int!
+}
+
 type CampaignWithAnalyticsDto {
   id: ID!
   userId: String!
@@ -209,12 +214,25 @@ type Query {
   getInstitutionById(institutionId: ID!): InstitutionDto!
   getAllCampaigns(filters: CampaignFilterInput): [CampaignDto!]!
   getCampaignById(campaignId: String!): CampaignWithAnalyticsDto!
-  getCampaignsByInstitutionId(institutionId: ID!): [CampaignDto!]!
+  getCampaignsByInstitutionId(input: GetUniversityCampaignsInput!): CampaignPaginatedResponse!
   getSupportRequestList(filters: SupportRequestFilterInput): [SupportRequestDto!]!
 }
 
 input CampaignFilterInput {
   isShownOnApp: Boolean
+}
+
+input GetUniversityCampaignsInput {
+  institutionId: String!
+  skip: Int
+  take: Int
+  timeframe: TimeframeFilter
+}
+
+enum TimeframeFilter {
+  THIS_WEEK
+  THIS_MONTH
+  NEXT_MONTH
 }
 
 input SupportRequestFilterInput {

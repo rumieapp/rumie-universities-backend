@@ -1,9 +1,14 @@
-import { ObjectType, Field, ID, Int, InputType } from '@nestjs/graphql';
+import {
+  ObjectType,
+  Field,
+  ID,
+  Int,
+  InputType,
+  registerEnumType,
+} from '@nestjs/graphql';
 import {
   IsNotEmpty,
   IsOptional,
-  IsDateString,
-  IsArray,
   IsUrl,
   IsEnum,
   IsBoolean,
@@ -11,6 +16,7 @@ import {
 } from 'class-validator';
 import { CampaignType } from 'src/enums/campaign-type.enum'; // Import the registered CampaignType enum
 import { Tag } from 'src/enums/campaign-tag.enum';
+import { TimeframeFilter } from '../campaign.service';
 @ObjectType()
 export class CampaignDto {
   @Field(() => ID)
@@ -164,4 +170,32 @@ export class UpdateCampaignInput {
   @Field()
   @IsBoolean()
   showOnApp: boolean;
+}
+
+@ObjectType()
+export class CampaignPaginatedResponse {
+  @Field(() => [CampaignDto])
+  campaigns: CampaignDto[];
+
+  @Field(() => Int)
+  totalCount: number;
+}
+
+registerEnumType(TimeframeFilter, {
+  name: 'TimeframeFilter',
+});
+
+@InputType()
+export class GetUniversityCampaignsInput {
+  @Field(() => String)
+  institutionId: string;
+
+  @Field(() => Int, { nullable: true })
+  skip?: number;
+
+  @Field(() => Int, { nullable: true })
+  take?: number;
+
+  @Field(() => TimeframeFilter, { nullable: true })
+  timeframe?: TimeframeFilter;
 }

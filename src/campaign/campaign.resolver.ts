@@ -2,7 +2,9 @@ import { Resolver, Query, Mutation, Args, ID, Context } from '@nestjs/graphql';
 import { CampaignService } from './campaign.service';
 import {
   CampaignDto,
+  CampaignPaginatedResponse,
   CreateCampaignInput,
+  GetUniversityCampaignsInput,
   UpdateCampaignInput,
 } from './dto/campaign.dto';
 import { CampaignWithAnalyticsDto } from './dto/campaign-with-analytics.dto';
@@ -57,10 +59,12 @@ export class CampaignResolver {
     );
   }
 
-  @Query(() => [CampaignDto])
+  @Query(() => CampaignPaginatedResponse)
   async getCampaignsByInstitutionId(
-    @Args('institutionId', { type: () => ID }) institutionId: string,
-  ): Promise<CampaignDto[]> {
-    return this.campaignService.getCampaignsByInstitutionId(institutionId);
+    @Args('input') input: GetUniversityCampaignsInput,
+  ) {
+    const response =
+      await this.campaignService.getCampaignsByInstitutionIdV2(input);
+    return response;
   }
 }

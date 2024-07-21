@@ -7,7 +7,9 @@ import {
 import { PrismaService } from '../prisma/prisma.service';
 import {
   CampaignDto,
+  CampaignPaginatedResponse,
   CreateCampaignInput,
+  GetUniversityCampaignsInput,
   UpdateCampaignInput,
 } from './dto/campaign.dto';
 // import { differenceInDays } from 'date-fns';
@@ -16,8 +18,21 @@ import { CampaignType } from 'src/enums/campaign-type.enum';
 import { Tag } from 'src/enums/campaign-tag.enum';
 import { CampaignWithAnalyticsDto } from './dto/campaign-with-analytics.dto';
 import { CampaignFilterInput } from './dto/campaign-filters.input';
+import {
+  differenceInDays,
+  fromUnixTime,
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth,
+  addMonths,
+} from 'date-fns';
 
-import { differenceInDays, fromUnixTime } from 'date-fns';
+export enum TimeframeFilter {
+  THIS_WEEK = 'THIS_WEEK',
+  THIS_MONTH = 'THIS_MONTH',
+  NEXT_MONTH = 'NEXT_MONTH',
+}
 
 function daysBetweenEpochTimestamps(timestamp1, timestamp2) {
   // Convert epoch timestamps from seconds to milliseconds
@@ -139,6 +154,67 @@ export class CampaignService {
       },
     });
     return this.mapToDto(campaign);
+  }
+
+  async getCampaignsByInstitutionIdV2({
+    institutionId,
+    skip,
+    take,
+    timeframe,
+  }: GetUniversityCampaignsInput): Promise<CampaignPaginatedResponse> {
+    const now = Date.now();
+
+    const whereClause: any = {
+      userId: institutionId,
+      campaignStartAt: { lte: now },
+      campaignEndAt: { gte: now },
+    };
+
+    if (timeframe) {
+      let startDate: number, endDate: number;
+
+      switch (timeframe) {
+        case TimeframeFilter.THIS_WEEK:
+          startDate = startOfWeek(now).getTime();
+          endDate = endOfWeek(now).getTime();
+          break;
+        case TimeframeFilter.THIS_MONTH:
+          startDate = startOfMonth(now).getTime();
+          endDate = endOfMonth(now).getTime();
+          break;
+        case TimeframeFilter.NEXT_MONTH:
+          const nextMonth = addMonths(now, 1);
+          startDate = startOfMonth(nextMonth).getTime();
+          endDate = endOfMonth(nextMonth).getTime();
+          break;
+      }
+
+      whereClause.eventDayTime = {
+        gte: startDate,
+        lte: endDate,
+      };
+    }
+
+    const [campaigns, totalCount] = await Promise.all([
+      this.prisma.campaign.findMany({
+        where: whereClause,
+        skip,
+        take,
+        orderBy: { eventDayTime: 'asc' },
+      }),
+      this.prisma.campaign.count({ where: whereClause }),
+    ]);
+
+    console.log(campaigns);
+
+    if (!campaigns.length) {
+      return { campaigns: [], totalCount: 0 };
+    }
+
+    return {
+      campaigns: campaigns.map(this.mapToDto),
+      totalCount,
+    };
   }
 
   async getCampaignsByInstitutionId(
