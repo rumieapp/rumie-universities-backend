@@ -210,9 +210,6 @@ type Query {
   getAllCampaigns(filters: CampaignFilterInput): [CampaignDto!]!
   getCampaignById(campaignId: String!): CampaignWithAnalyticsDto!
   getCampaignsByInstitutionId(institutionId: ID!): [CampaignDto!]!
-  getTestDev: String!
-  getTestDev2: String!
-  getTestDev3: String!
   getSupportRequestList(filters: SupportRequestFilterInput): [SupportRequestDto!]!
 }
 
@@ -249,9 +246,9 @@ input CreateCampaignInput {
   type: CampaignType!
   tag: Tag!
   campaignImage: String
-  campaignStartAt: String!
-  campaignEndAt: String!
-  eventDayTime: String!
+  campaignStartAt: Float!
+  campaignEndAt: Float!
+  eventDayTime: Float!
   showOnApp: Boolean!
 }
 
@@ -263,9 +260,9 @@ input UpdateCampaignInput {
   type: CampaignType!
   tag: Tag!
   campaignImage: String
-  campaignStartAt: String!
-  campaignEndAt: String!
-  eventDayTime: String!
+  campaignStartAt: Float!
+  campaignEndAt: Float!
+  eventDayTime: Float!
   showOnApp: Boolean!
 }
 

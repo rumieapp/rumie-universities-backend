@@ -7,7 +7,6 @@ import {
 } from './dto/campaign.dto';
 import { CampaignWithAnalyticsDto } from './dto/campaign-with-analytics.dto';
 import { CampaignFilterInput } from './dto/campaign-filters.input';
-import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UseGuards } from '@nestjs/common';
 
@@ -63,20 +62,5 @@ export class CampaignResolver {
     @Args('institutionId', { type: () => ID }) institutionId: string,
   ): Promise<CampaignDto[]> {
     return this.campaignService.getCampaignsByInstitutionId(institutionId);
-  }
-
-  @Query(() => String)
-  async getTestDev() {
-    return 'test';
-  }
-
-  @Query(() => String)
-  async getTestDev2() {
-    return 'test';
-  }
-
-  @Query(() => String)
-  async getTestDev3() {
-    return 'test';
   }
 }

@@ -8,6 +8,26 @@ export class PrismaService
 {
   async onModuleInit() {
     await this.$connect();
+    // const updateCommand = {
+    //   update: 'campaigns',
+    //   updates: [
+    //     {
+    //       q: {},
+    //       u: [
+    //         {
+    //           $set: {
+    //             campaignStartAt: { $toInt: '$campaignStartAt' },
+    //             campaignEndAt: { $toInt: '$campaignEndAt' },
+    //             eventDayTime: { $toInt: '$eventDayTime' },
+    //           },
+    //         },
+    //       ],
+    //       multi: true,
+    //     },
+    //   ],
+    // };
+
+    // await this.$runCommandRaw(updateCommand);
   }
 
   async onModuleDestroy() {

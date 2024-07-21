@@ -27,11 +27,11 @@ async function createCampaign() {
       url: 'https://example.com',
       type: CampaignType.LISTING,
       tag: 'EVENT',
-      campaignStartAt: '',
-      campaignEndAt: '',
+      campaignStartAt: 0,
+      campaignEndAt: 0,
       campaignDuration,
       showOnApp: true,
-      eventDayTime: '',
+      eventDayTime: 0,
     },
   });
 }

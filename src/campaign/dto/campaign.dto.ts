@@ -100,15 +100,15 @@ export class CreateCampaignInput {
 
   @Field()
   @IsNotEmpty()
-  campaignStartAt: string;
+  campaignStartAt: number;
 
   @Field()
   @IsNotEmpty()
-  campaignEndAt: string;
+  campaignEndAt: number;
 
   @Field()
   @IsNotEmpty()
-  eventDayTime: string;
+  eventDayTime: number;
 
   @Field()
   @IsBoolean()
@@ -151,15 +151,15 @@ export class UpdateCampaignInput {
 
   @Field()
   @IsNotEmpty()
-  campaignStartAt: string;
+  campaignStartAt: number;
 
   @Field()
   @IsNotEmpty()
-  campaignEndAt: string;
+  campaignEndAt: number;
 
   @Field()
   @IsNotEmpty()
-  eventDayTime: string;
+  eventDayTime: number;
 
   @Field()
   @IsBoolean()

@@ -72,10 +72,10 @@ model Campaign {
   tag                 Tag
   localistId          String?
   campaignImage       String?
-  campaignStartAt     String
-  campaignEndAt       String
+  campaignStartAt     Int
+  campaignEndAt       Int
   campaignDuration    Int
-  eventDayTime        String
+  eventDayTime        Int
   showOnApp           Boolean      @default(true)
   createdAt           DateTime     @default(now())
   updatedAt           DateTime     @default(now()) @updatedAt
