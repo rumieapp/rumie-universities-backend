@@ -42,17 +42,17 @@ export class CampaignDto {
   @Field({ nullable: true })
   campaignImage?: string;
 
-  @Field()
-  campaignStartAt: string;
+  @Field(() => Int)
+  campaignStartAt: number;
 
-  @Field()
-  campaignEndAt: string;
+  @Field(() => Int)
+  campaignEndAt: number;
 
   @Field(() => Int)
   campaignDuration: number;
 
-  @Field()
-  eventDayTime: string;
+  @Field(() => Int)
+  eventDayTime: number;
 
   @Field()
   showOnApp: boolean;
@@ -98,15 +98,15 @@ export class CreateCampaignInput {
   @IsUrl()
   campaignImage?: string;
 
-  @Field()
+  @Field(() => Int)
   @IsNotEmpty()
   campaignStartAt: number;
 
-  @Field()
+  @Field(() => Int)
   @IsNotEmpty()
   campaignEndAt: number;
 
-  @Field()
+  @Field(() => Int)
   @IsNotEmpty()
   eventDayTime: number;
 
@@ -149,15 +149,15 @@ export class UpdateCampaignInput {
   @IsUrl()
   campaignImage?: string;
 
-  @Field()
+  @Field(() => Int)
   @IsNotEmpty()
   campaignStartAt: number;
 
-  @Field()
+  @Field(() => Int)
   @IsNotEmpty()
   campaignEndAt: number;
 
-  @Field()
+  @Field(() => Int)
   @IsNotEmpty()
   eventDayTime: number;
 
