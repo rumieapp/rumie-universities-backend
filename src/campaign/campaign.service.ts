@@ -162,12 +162,14 @@ export class CampaignService {
     take,
     timeframe,
   }: GetUniversityCampaignsInput): Promise<CampaignPaginatedResponse> {
-    const now = Date.now();
+    const epochInMilliseconds = Date.now();
+    const epochInSeconds = epochInMilliseconds / 1000;
 
     const whereClause: any = {
       userId: institutionId,
-      campaignStartAt: { lte: now },
-      campaignEndAt: { gte: now },
+      campaignStartAt: { lte: epochInSeconds },
+      campaignEndAt: { gte: epochInSeconds },
+      showOnApp: true,
     };
 
     if (timeframe) {
@@ -175,23 +177,28 @@ export class CampaignService {
 
       switch (timeframe) {
         case TimeframeFilter.THIS_WEEK:
-          startDate = startOfWeek(now).getTime();
-          endDate = endOfWeek(now).getTime();
+          startDate = startOfWeek(epochInMilliseconds).getTime();
+          endDate = endOfWeek(epochInMilliseconds).getTime();
           break;
         case TimeframeFilter.THIS_MONTH:
-          startDate = startOfMonth(now).getTime();
-          endDate = endOfMonth(now).getTime();
+          startDate = startOfMonth(epochInMilliseconds).getTime();
+          endDate = endOfMonth(epochInMilliseconds).getTime();
           break;
         case TimeframeFilter.NEXT_MONTH:
-          const nextMonth = addMonths(now, 1);
+          const nextMonth = addMonths(epochInMilliseconds, 1);
           startDate = startOfMonth(nextMonth).getTime();
           endDate = endOfMonth(nextMonth).getTime();
           break;
       }
 
+      const startDateInSeconds = startDate / 1000;
+      const endDateInSeconds = endDate / 1000;
+
+      console.log(startDateInSeconds, endDateInSeconds);
+
       whereClause.eventDayTime = {
-        gte: startDate,
-        lte: endDate,
+        gte: startDateInSeconds,
+        lte: endDateInSeconds,
       };
     }
 
@@ -204,8 +211,6 @@ export class CampaignService {
       }),
       this.prisma.campaign.count({ where: whereClause }),
     ]);
-
-    console.log(campaigns);
 
     if (!campaigns.length) {
       return { campaigns: [], totalCount: 0 };
