@@ -109,6 +109,7 @@ type InstitutionDto {
   institutionName: String!
   slug: String!
   passCode: String!
+  localistCalendarUrl: String
   logo: String
   schoolColor: String
   createdAt: DateTime!
@@ -126,6 +127,7 @@ type CampaignDto {
   title: String!
   url: String
   location: String
+  localistId: String
   locationCoordinates: String
   type: CampaignType!
   tag: Tag!
@@ -164,6 +166,7 @@ type CampaignWithAnalyticsDto {
   title: String!
   url: String
   location: String
+  localistId: String
   locationCoordinates: String
   type: CampaignType!
   tag: Tag!
@@ -230,6 +233,7 @@ input GetUniversityCampaignsInput {
 }
 
 enum TimeframeFilter {
+  ALL
   THIS_WEEK
   THIS_MONTH
   NEXT_MONTH
@@ -254,6 +258,7 @@ input UpdateInstitutionSettingInput {
   passCode: String!
   logo: String!
   schoolColor: String!
+  localistCalendarUrl: String
 }
 
 input CreateCampaignInput {
@@ -266,6 +271,7 @@ input CreateCampaignInput {
   campaignImage: String
   campaignStartAt: Int!
   campaignEndAt: Int!
+  localistId: String
   eventDayTime: Int!
   showOnApp: Boolean!
 }

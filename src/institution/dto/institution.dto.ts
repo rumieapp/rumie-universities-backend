@@ -23,8 +23,8 @@ export class InstitutionDto {
     description: 'The passcode for the institution',
     nullable: true,
   })
-  @Field()
-  localistId?: string;
+  @Field({ nullable: true })
+  localistCalendarUrl?: string;
 
   @ApiProperty({
     description: 'The logo URL of the institution',
