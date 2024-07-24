@@ -29,6 +29,7 @@ import {
 } from 'date-fns';
 
 export enum TimeframeFilter {
+  ALL = 'ALL',
   THIS_WEEK = 'THIS_WEEK',
   THIS_MONTH = 'THIS_MONTH',
   NEXT_MONTH = 'NEXT_MONTH',
@@ -172,7 +173,7 @@ export class CampaignService {
       showOnApp: true,
     };
 
-    if (timeframe) {
+    if (timeframe && timeframe !== TimeframeFilter.ALL) {
       let startDate: number, endDate: number;
 
       switch (timeframe) {
@@ -193,8 +194,6 @@ export class CampaignService {
 
       const startDateInSeconds = startDate / 1000;
       const endDateInSeconds = endDate / 1000;
-
-      console.log(startDateInSeconds, endDateInSeconds);
 
       whereClause.eventDayTime = {
         gte: startDateInSeconds,
