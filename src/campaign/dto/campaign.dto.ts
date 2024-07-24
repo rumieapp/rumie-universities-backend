@@ -115,6 +115,9 @@ export class CreateCampaignInput {
   @IsNotEmpty()
   campaignEndAt: number;
 
+  @Field({ nullable: true })
+  localistId?: string;
+
   @Field(() => Int)
   @IsNotEmpty()
   eventDayTime: number;
