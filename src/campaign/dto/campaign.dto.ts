@@ -35,6 +35,9 @@ export class CampaignDto {
   location?: string;
 
   @Field({ nullable: true })
+  localistId?: string;
+
+  @Field({ nullable: true })
   locationCoordinates?: string;
 
   @Field(() => CampaignType) // Use the registered CampaignType enum

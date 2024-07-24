@@ -76,7 +76,7 @@ model Campaign {
   campaignEndAt       Int
   campaignDuration    Int
   eventDayTime        Int
-  showOnApp           Boolean      @default(true)
+  showOnApp           Boolean      @default(false)
   createdAt           DateTime     @default(now())
   updatedAt           DateTime     @default(now()) @updatedAt
 
@@ -84,15 +84,16 @@ model Campaign {
 }
 
 model Institution {
-  id              String    @id @default(auto()) @map("_id") @db.ObjectId
-  institutionName String
-  slug            String    @unique
-  passCode        String
-  logo            String?
-  schoolColor     String?
-  sessions        Session[]
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  id                  String    @id @default(auto()) @map("_id") @db.ObjectId
+  institutionName     String
+  slug                String    @unique
+  passCode            String
+  logo                String?
+  schoolColor         String?
+  localistCalendarUrl String?
+  sessions            Session[]
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 
   @@map("institutions")
 }
