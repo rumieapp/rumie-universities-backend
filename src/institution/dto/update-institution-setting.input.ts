@@ -18,4 +18,7 @@ export class UpdateInstitutionSettingInput {
   @Field()
   @IsNotEmpty()
   schoolColor: string;
+
+  @Field()
+  localistCalendarUrl: string;
 }
