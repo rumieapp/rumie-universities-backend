@@ -19,11 +19,24 @@ export class InstitutionDto {
   @Field()
   passCode: string;
 
-  @ApiProperty({ description: 'The logo URL of the institution', required: false })
+  @ApiProperty({
+    description: 'The passcode for the institution',
+    nullable: true,
+  })
+  @Field()
+  localistId?: string;
+
+  @ApiProperty({
+    description: 'The logo URL of the institution',
+    required: false,
+  })
   @Field({ nullable: true })
   logo?: string;
 
-  @ApiProperty({ description: 'The school color of the institution', required: false })
+  @ApiProperty({
+    description: 'The school color of the institution',
+    required: false,
+  })
   @Field({ nullable: true })
   schoolColor?: string;
 
