@@ -59,7 +59,7 @@ export class CampaignService {
       },
     });
 
-    return campaigns.map((c) => c.id);
+    return campaigns.map((c) => c.localistId || '');
   }
 
   async createCampaign(
