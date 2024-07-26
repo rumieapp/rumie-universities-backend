@@ -68,7 +68,7 @@ model Campaign {
   url                 String?
   location            String?
   locationCoordinates String?
-  type                CampaignType
+  type                CampaignType[]
   tag                 Tag
   localistId          String?
   campaignImage       String?

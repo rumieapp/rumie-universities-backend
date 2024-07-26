@@ -69,7 +69,7 @@ export class CampaignService {
         campaignDuration,
         campaignStartAt,
         campaignEndAt,
-        type: data.type as PrismaCampaignType,
+        type: data.type as PrismaCampaignType[],
         tag: data.tag as Tag,
         eventDayTime,
       },

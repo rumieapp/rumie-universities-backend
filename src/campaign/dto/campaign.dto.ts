@@ -40,9 +40,8 @@ export class CampaignDto {
   @Field({ nullable: true })
   locationCoordinates?: string;
 
-  @Field(() => CampaignType) // Use the registered CampaignType enum
-  @IsEnum(CampaignType)
-  type: CampaignType;
+  @Field(() => [CampaignType]) // Use the registered CampaignType enum
+  type: CampaignType[];
 
   @Field(() => Tag)
   @IsEnum(Tag)
@@ -94,9 +93,8 @@ export class CreateCampaignInput {
   @IsString()
   locationCoordinates?: string;
 
-  @Field(() => CampaignType) // Use the registered CampaignType enum
-  @IsEnum(CampaignType)
-  type: CampaignType;
+  @Field(() => [CampaignType]) // Use the registered CampaignType enum
+  type: CampaignType[];
 
   @Field(() => Tag) // Use the registered Tag enum
   @IsEnum(Tag)
@@ -148,9 +146,8 @@ export class UpdateCampaignInput {
   @IsString()
   locationCoordinates?: string;
 
-  @Field(() => CampaignType)
-  @IsEnum(CampaignType)
-  type: CampaignType;
+  @Field(() => [CampaignType])
+  type: CampaignType[];
 
   @Field(() => Tag)
   @IsEnum(Tag)

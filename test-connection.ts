@@ -25,7 +25,7 @@ async function createCampaign() {
       userId: userId,
       title: 'New Campaign',
       url: 'https://example.com',
-      type: CampaignType.LISTING,
+      type: [CampaignType.LISTING],
       tag: 'EVENT',
       campaignStartAt: 0,
       campaignEndAt: 0,

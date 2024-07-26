@@ -129,7 +129,7 @@ type CampaignDto {
   location: String
   localistId: String
   locationCoordinates: String
-  type: CampaignType!
+  type: [CampaignType!]!
   tag: Tag!
   campaignImage: String
   campaignStartAt: Int!
@@ -168,7 +168,7 @@ type CampaignWithAnalyticsDto {
   location: String
   localistId: String
   locationCoordinates: String
-  type: CampaignType!
+  type: [CampaignType!]!
   tag: Tag!
   campaignImage: String
   campaignStartAt: Int!
@@ -266,7 +266,7 @@ input CreateCampaignInput {
   url: String
   location: String
   locationCoordinates: String
-  type: CampaignType!
+  type: [CampaignType!]!
   tag: Tag!
   campaignImage: String
   campaignStartAt: Int!
@@ -281,7 +281,7 @@ input UpdateCampaignInput {
   url: String
   location: String
   locationCoordinates: String
-  type: CampaignType!
+  type: [CampaignType!]!
   tag: Tag!
   campaignImage: String
   campaignStartAt: Int!
