@@ -216,6 +216,7 @@ type Query {
   getUniversityStats: UniversityStats!
   getInstitutionById(institutionId: ID!): InstitutionDto!
   getAllCampaigns(filters: CampaignFilterInput): [CampaignDto!]!
+  checkIfLocalistCampaignIsAlreadyImported(localistIds: [String!]!): [String!]
   getCampaignById(campaignId: String!): CampaignWithAnalyticsDto!
   getCampaignsByInstitutionId(input: GetUniversityCampaignsInput!): CampaignPaginatedResponse!
   getSupportRequestList(filters: SupportRequestFilterInput): [SupportRequestDto!]!

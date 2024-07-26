@@ -26,6 +26,13 @@ export class CampaignResolver {
     return this.campaignService.getAllCampaigns(institutionId, filters);
   }
 
+  @Query(() => [String], { nullable: true })
+  async checkIfLocalistCampaignIsAlreadyImported(
+    @Args('localistIds', { type: () => [String] }) locatlistIds: string[],
+  ): Promise<string[]> {
+    return this.campaignService.checkIfLocalistIdsAreThere(locatlistIds);
+  }
+
   @Mutation(() => CampaignDto)
   @UseGuards(JwtAuthGuard)
   async createCampaign(

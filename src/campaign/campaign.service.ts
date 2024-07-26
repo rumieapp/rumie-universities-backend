@@ -50,6 +50,18 @@ function daysBetweenEpochTimestamps(timestamp1, timestamp2) {
 export class CampaignService {
   constructor(private prisma: PrismaService) {}
 
+  async checkIfLocalistIdsAreThere(localistIds: string[]): Promise<string[]> {
+    const campaigns = await this.prisma.campaign.findMany({
+      where: {
+        localistId: {
+          in: localistIds,
+        },
+      },
+    });
+
+    return campaigns.map((c) => c.id);
+  }
+
   async createCampaign(
     institutionId,
     data: CreateCampaignInput,

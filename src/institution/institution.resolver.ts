@@ -11,16 +11,12 @@ import { UniversityStats } from './dto/university-stats.dto';
 export class InstitutionResolver {
   constructor(private readonly institutionService: InstitutionService) {}
 
-
-  @Query(()=> InstitutionDto)
+  @Query(() => InstitutionDto)
   @UseGuards(JwtAuthGuard)
-  async me(
-    @Context() context: any,
-  ){
+  async me(@Context() context: any) {
     const user = context.req.user;
     return user as InstitutionDto;
   }
-
 
   @Query(() => InstitutionDto, { nullable: true })
   async getInstitutionBySlug(
@@ -29,8 +25,8 @@ export class InstitutionResolver {
     return this.institutionService.getInstitutionBySlug(slug);
   }
 
-  @Query( ()=> [InstitutionDto], {nullable:true})
-  async getInstitutionList(): Promise<InstitutionDto[]>{
+  @Query(() => [InstitutionDto], { nullable: true })
+  async getInstitutionList(): Promise<InstitutionDto[]> {
     return this.institutionService.getInstitutionList();
   }
 
@@ -38,16 +34,14 @@ export class InstitutionResolver {
   @UseGuards(JwtAuthGuard)
   async updateInstitutionSetting(
     @Context() context: any,
-    @Args('input') data: UpdateInstitutionSettingInput
+    @Args('input') data: UpdateInstitutionSettingInput,
   ): Promise<Institution> {
     const id = context.req.user.id;
     return this.institutionService.updateInstitutionSetting(id, data);
   }
-  @Query( ()=> UniversityStats)
+  @Query(() => UniversityStats)
   @UseGuards(JwtAuthGuard)
-  async getUniversityStats(
-    @Context() context:any
-  ){
+  async getUniversityStats(@Context() context: any) {
     const user = context.req.user;
     return await this.institutionService.getUniversityStats();
   }
